@@ -188,17 +188,7 @@ height: 55vh;
   font-family: 'Roboto Mono', monospace;
  }
 
- .play-ground_area_design{
-
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  margin: auto;
-  overflow-y: scroll;
-  scrollbar-width: none;
-
  
-}
  .trigger{
   display: flex;
   justify-self: center;
@@ -213,6 +203,7 @@ height: 55vh;
   color: black;
   text-align: center;
   border-radius: 5px
+  
  }
 
  .trigger-navbar{
@@ -269,4 +260,29 @@ margin: 0%;
 padding: 0%;
 width: 19vw;
 
+}
+
+
+/* 1. Ensure the container establishes a stacking context */
+.play-ground_area_design {
+    position: relative; 
+    /* existing styles... */
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+  margin: auto;
+  scrollbar-width: none;
+ 
+}
+
+/* 2. Push the SVG lines to the background */
+#dynamic-svg {
+    z-index: 0 !important;
+}
+
+/* 3. Pull the Cards to the foreground */
+/* This targets the actual card divs (Open_Url, etc.) */
+.play-ground_area_design > div:not(#dynamic-svg) {
+    position: relative !important; /* Required for z-index to work */
+    z-index: 10 !important;        /* Higher than the SVG (0) */
 }

@@ -1,6 +1,6 @@
 export default function Trigger_Area (){
     return(
-        <div className="trigger" key={101}>
+        <div className="trigger" key={101} data-key={"101"}>
       <div  className="trigger-navbar">
         <p>Egniter</p>
       </div>

@@ -6,17 +6,23 @@ interface DesignContextType {
   setStack: Dispatch<SetStateAction<Array<string>>>;
   normal_dict: NormalDict
   setNormal_dict: Dispatch<SetStateAction<NormalDict>>;
+  unqiue_key: unique_to_Dragable;
+  setUnqiueKey: Dispatch<SetStateAction<unique_to_Dragable >>;
 }
 
 type NormalDict = {
   [key: string]: ReactNode| string;
 };
-
+type unique_to_Dragable = {
+  [key: string]:  string;
+};
 const DesignContext = createContext<DesignContextType>({
   stack: [],
   setStack: () => {},
   normal_dict:{},
    setNormal_dict:() => {},
+   unqiue_key:{},
+   setUnqiueKey:() => {},
 });
 
 interface DesignStackProps {
@@ -30,8 +36,12 @@ const DesignStack = ({ children }: DesignStackProps) => {
   const [normal_dict, setNormal_dict] = useState<NormalDict>(
     {'101':(<Trigger_Area/>)}
   ); // default element
+
+    const [unqiue_key, setUnqiueKey] = useState<unique_to_Dragable >(
+    {'101':'101'}
+  );
   return (
-    <DesignContext.Provider value={{ stack, setStack,normal_dict,setNormal_dict }}>
+    <DesignContext.Provider value={{ stack, setStack,normal_dict,setNormal_dict,unqiue_key, setUnqiueKey }}>
       {children}
     </DesignContext.Provider>
   );
