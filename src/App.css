@@ -10,7 +10,20 @@
   height: 3rem;
   width: auto;
   margin-left: 1rem;
+
 }
+
+
+    .Project-Name{
+      color: black;
+      font-weight: bold;
+      font-family: 'Roboto Mono', monospace;
+      display: flex;
+      align-self:center ;
+      justify-self: center;
+      
+      
+    }
 
 .Desing_state{
 
@@ -26,7 +39,7 @@
    height: 1.4rem;
    width: 3.9rem;
    border-radius: 10%;
-   left: 900px;
+  right: 100%;
    margin-right: 1rem;
   }
 
@@ -84,11 +97,15 @@ direction: row;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-  background-color: #C8C8C8;
+
     height: 20vh;
   width: 20vw;
   background-color: rgba(200, 200, 200, 0.28);
-  
+     background-image: url("./images/light_grey_dots_background.jpg");
+  background-repeat: unset; 
+  background-size: 190px;
+  border: 1px solid rgba(200, 200, 200, 0.28);
+    background-blend-mode: multiply;
 
   }
 
@@ -194,12 +211,12 @@ height: 55vh;
   justify-self: center;
   flex-direction: column;
 
-  margin: 10px 0 0 0;
+
   width: 90vh;
   height: 15vh;
   background-color: #ffff;
   border:1px solid black;
-  margin-top: 5vh;
+
   color: black;
   text-align: center;
   border-radius: 5px
@@ -282,7 +299,37 @@ width: 19vw;
 
 /* 3. Pull the Cards to the foreground */
 /* This targets the actual card divs (Open_Url, etc.) */
-.play-ground_area_design > div:not(#dynamic-svg) {
-    position: relative !important; /* Required for z-index to work */
+.play-ground_area_design {
+   position: relative !important; /* Required for z-index to work */
     z-index: 10 !important;        /* Higher than the SVG (0) */
+    background-image: url("./images/light_grey_dots_background.jpg");
+  background-repeat: unset; 
+  background-size:250px ;
+    background-color: rgba(200, 200, 200, 0.28);
+    background-blend-mode: multiply;
 }
+.play-ground_area_design > div:not(#dynamic-svg) {
+ 
+}
+
+.line-connector{
+  height: 8vh;
+  width: 0.12vw;
+  margin: 0%;
+  padding: 0%;
+  display: flex;
+  background-color: black;
+  justify-self: center;
+  align-self: center;
+}
+
+.arrow-connector{
+    display: flex;
+      justify-self: center;
+      color: black;
+      margin: 0%;
+      padding: 0%;
+      line-height: 0px;
+      margin-bottom: 10px;
+      font-size: 21px;
+    }

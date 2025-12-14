@@ -1,8 +1,11 @@
 import React, { useContext, useEffect, useState, useLayoutEffect, useRef } from 'react';
 import Drag_able_card from './drag_able_card';
 import borwser_control from '../images/open_url.png';
+import mouse_click from '../images/mouse_click.png';
 import { DesignContext } from '../Global_stateMangement/design_stack';
 import Open_Url from '../playground_content/Open_url';
+import Mouse_click from '../playground_content/Mouse_click';
+import PolyLine from '../playground_content/poly_line';
 
 export default function DesignStateToolBoxArea() {
   const { stack, setStack, normal_dict, setNormal_dict, unqiue_key, setUnqiueKey } = useContext(DesignContext);
@@ -12,29 +15,31 @@ export default function DesignStateToolBoxArea() {
   const playgroundRef = useRef(null);
 
   useEffect(() => {
+    console.log(unqiue_key)
+    let obj = []
     Object.keys(unqiue_key).forEach((item, idx) => {
       const it = unqiue_key[item];
-      setDisplayBlocks([...display_block, normal_dict[it]]);
+      obj.push(<PolyLine/>)
+      obj.push(normal_dict[it])
     });
-  }, [stack, normal_dict, unqiue_key]);
 
-  // Re-draw lines whenever blocks change
-  useLayoutEffect(() => {
-    polyline_handler();
-  }, [display_block]);
+    setDisplayBlocks(obj);
+  }, [ normal_dict, unqiue_key]);
+
+
 
   const onDragCapture = (event) => {
     event.preventDefault();
 
     const iid = event.dataTransfer.getData("iid");
-    if (iid === '1') {
-      const unique_key_map = {
-        1: "A",
-        2: "B",
-        15: "C"
-      };
-
-      const newKey = generateUniqueRandomNumber(unqiue_key); // Passed unqiue_key state instead of static obj
+    console.log('oiid',iid)
+    console.log('oiid',typeof(iid))
+    console.log('oiid',iid == '1')
+    const newKey = 'A'+String(generateUniqueRandomNumber(unqiue_key)); // Passed unqiue_key state instead of static obj
+    if (iid == '1') {
+     
+      console.log('if --oiid',iid)
+     
 
       setUnqiueKey({
         ...unqiue_key,
@@ -46,6 +51,19 @@ export default function DesignStateToolBoxArea() {
         [iid]: <Open_Url data_key={newKey} />
       });
     }
+  else if(iid == '2'){
+   
+       console.log('elseif --oiid',iid)
+      setUnqiueKey({
+        ...unqiue_key,
+        [newKey]: iid
+      });
+
+      setNormal_dict({
+        ...normal_dict,
+        [iid]: <Mouse_click data_key={newKey} />
+      });
+  }
   };
 
   function generateUniqueRandomNumber(unique_key_obj) {
@@ -57,70 +75,7 @@ export default function DesignStateToolBoxArea() {
     return num;
   }
 
-  const polyline_handler = () => {
-    const container = playgroundRef.current;
-    if (!container) return;
-
-    // 1. Setup SVG inside the container
-    let svg = document.getElementById("dynamic-svg");
-    if (!svg) {
-      svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-      svg.setAttribute("id", "dynamic-svg");
-      svg.style.position = "absolute";
-      svg.style.top = "0";
-      svg.style.left = "0";
-      svg.style.width = "100%";
-      svg.style.height = "100%";
-      svg.style.pointerEvents = "none"; // Allow clicking through lines
-      svg.style.overflow = "visible";   // Allow lines to render if container expands
-      svg.style.zIndex = "-1";           // Behind the cards
-      container.appendChild(svg);
-    }
-
-    // 2. Clear previous lines
-    svg.innerHTML = "";
-
-    const ky = Object.keys(unqiue_key);
-    if (ky.length <= 1) return;
-
-    let i = 0;
-    const containerRect = container.getBoundingClientRect();
-
-    while (i < ky.length - 1) {
-      const first_item = ky[i];
-      const second_item = ky[i + 1];
-
-      const dom1 = document.querySelector(`[data-key="${first_item}"]`);
-      const dom2 = document.querySelector(`[data-key="${second_item}"]`);
-
-      if (!dom1 || !dom2) {
-        console.warn("Missing element for", first_item, second_item);
-        i++;
-        continue;
-      }
-
-      const rect1 = dom1.getBoundingClientRect();
-      const rect2 = dom2.getBoundingClientRect();
-
-      // 3. Calculate offsets relative to the container + scroll position
-      const x1 = (rect1.left - containerRect.left) + container.scrollLeft + (rect1.width / 2);
-      const y1 = (rect1.bottom - containerRect.top) + container.scrollTop;
-
-      const x2 = (rect2.left - containerRect.left) + container.scrollLeft + (rect2.width / 2);
-      const y2 = (rect2.top - containerRect.top) + container.scrollTop;
-
-      // 4. Draw Polyline
-      const polyline = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
-      polyline.setAttribute("points", `${x1},${y1} ${x2},${y2}`);
-      polyline.setAttribute("stroke", "black");
-      polyline.setAttribute("fill", "none");
-      polyline.setAttribute("stroke-width", "3");
-      
-      svg.appendChild(polyline);
-      i++;
-    }
-  };
-
+  
   return (
     <div className="deisgn_state_tool_box_area">
       {/* Left Toolbar */}
@@ -136,7 +91,7 @@ export default function DesignStateToolBoxArea() {
         </div>
         <div className="dragable-controle-area">
           <Drag_able_card img_ref={borwser_control} title={'Open Url'} id={1} />
-          <Drag_able_card img_ref={borwser_control} title={'Mouse Click'} id={2} />
+          <Drag_able_card img_ref={mouse_click} title={'Mouse Click'} id={2} />
           <Drag_able_card img_ref={borwser_control} title={'Open Url'} id={3} />
           <Drag_able_card img_ref={borwser_control} title={'Open Url'} id={4} />
           <Drag_able_card img_ref={borwser_control} title={'Open Url'} id={5} />

@@ -6,7 +6,7 @@ export default  function Navbar(){
         
         <div className="navbar">
             <img src={MainLogo} className='image-main-logo'/>
-
+            <p className='Project-Name'> Muhammad Ahsan Ali/Test Project(12.14.2025)</p>
 
             <div className='User-Login-Setting'>
                <div className='User-Login-Setting-icon-left'></div> 
